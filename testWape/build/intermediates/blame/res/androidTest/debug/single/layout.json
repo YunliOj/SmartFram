@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/res/merged/androidTest/debug/layout/activity_main.xml",
+        "source": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/bundles/debug/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/res/merged/androidTest/debug/layout/activity_list.xml",
+        "source": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/bundles/debug/res/layout/activity_list.xml"
+    },
+    {
+        "merged": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/res/merged/androidTest/debug/layout/item_list_app.xml",
+        "source": "/Users/echo/Dev/Demo/SmartFram/testWape/build/intermediates/bundles/debug/res/layout/item_list_app.xml"
+    }
+]
