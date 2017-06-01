@@ -49,4 +49,10 @@ public class MonitorItem extends LinearLayout{
         }
     }
 
+    public void setText(String s){
+        if(mTvData!=null){
+            mTvData.setText(s);
+        }
+    }
+
 }

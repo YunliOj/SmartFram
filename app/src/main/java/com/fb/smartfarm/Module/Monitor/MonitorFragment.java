@@ -16,9 +16,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fb.smartfarm.R;
+import com.fb.smartfarm.UtilsTools.LogUtil;
+import com.fb.smartfarm.view.CustomView.MonitorItem;
 import com.fb.smartfarm.view.CustomView.MyBaseFragment;
 
 import java.util.ArrayList;
@@ -28,7 +31,8 @@ import java.util.List;
  * Created by echo on 2017/4/29.
  */
 
-public class MonitorFragment extends MyBaseFragment{
+public class MonitorFragment extends MyBaseFragment implements MonitorDataManager.MonitorListener{
+    private final String TAG = MonitorFragment.class.getSimpleName();
     private ScrollView mScrollView;
     private Context mContext;
 
@@ -40,6 +44,25 @@ public class MonitorFragment extends MyBaseFragment{
     private List<String> mainList;
     private ListView mainlist;
     private Button btnPlay;
+    private MonitorDataManager dataManager;
+
+    private MonitorItem mTvAirTp;
+    private MonitorItem mTvAirHumidity;
+    private MonitorItem mTvSoilTp;
+    private MonitorItem mTvSoilHumidity;
+    private MonitorItem mTvCo2;
+    private MonitorItem mTvWind;
+    private MonitorItem mTvRainFall;
+    private MonitorItem mTvSunshine;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dataManager = new MonitorDataManager();
+        dataManager.start();
+        dataManager.init(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +81,31 @@ public class MonitorFragment extends MyBaseFragment{
                 Toast.makeText(mContext,"播放",Toast.LENGTH_SHORT).show();
             }
         });
+        mTvAirTp = (MonitorItem) getActivity().findViewById(R.id.air_tp);
+        mTvAirHumidity = (MonitorItem) getActivity().findViewById(R.id.air_humidity);
+        mTvCo2 = (MonitorItem) getActivity().findViewById(R.id.co2);
+        mTvSoilTp = (MonitorItem) getActivity().findViewById(R.id.soil_tp);
+        mTvSoilHumidity = (MonitorItem) getActivity().findViewById(R.id.soil_humidity);
+        mTvWind = (MonitorItem) getActivity().findViewById(R.id.wind);
+        mTvRainFall = (MonitorItem) getActivity().findViewById(R.id.rainfall);
+        mTvSunshine = (MonitorItem) getActivity().findViewById(R.id.sunshine);
+
     }
 
+    @Override
+    public void monitorDataChange(List<MonitorDataBean> list) {
+        MonitorDataBean bean = list.get(49);
+        LogUtil.d(TAG,""+bean);
+        mTvSoilTp.setText(bean.getSoilTemp());
+        mTvSoilHumidity.setText(bean.getSoilHumidity());
+        mTvAirTp.setText(bean.getAirTemp());
+        mTvAirHumidity.setText(bean.getAirHumidity());
+        mTvCo2.setText(bean.getCo2Concentration());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dataManager.relace();
+    }
 }
